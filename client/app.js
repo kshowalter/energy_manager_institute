@@ -13,6 +13,8 @@ import f from 'functions';
 import hash_router from 'hash_router';
 import Specdom  from 'specdom';
 
+import input_page from './input';
+
 import settings from './settings';
 
 var page_file_list = require.context("../page/", true, /.*\.md$/).keys();
@@ -97,6 +99,11 @@ function requireAll(r) {
 }
 requireAll(require.context('../page/', true, /\.md$/));
 
+pages['input'] = {
+  specs: input_page()
+
+};
+
 //var about = require('markdown_parser!../page/about.md');
 console.log('pages', pages);
 
@@ -149,17 +156,6 @@ var router = hash_router(function(selection){
           },
           text: 'Modern Energy Generation Designer :'
         }
-        //*/
-        /*
-        {
-          tag: 'img',
-          props: {
-            alt: 'Keith Showalter :',
-            src: 'assets/title_black.png',
-            width: '350px'
-          }
-        }
-        //*/
       ]
     };
 
