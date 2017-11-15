@@ -1,0 +1,19 @@
+{
+  "name": "modern_energy_designer",
+  "version": "0.1.0",
+  "description": "Web application to help users learn to design modern electrical generation systems.",
+  "main": "webpack.config.js",
+  "scripts": {
+    "serve": "webpack-dev-server --content-base public/ --inline --hot -d"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kshowalter/modern_energy_designer.git"
+  },
+  "author": "Keith Showalter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kshowalter/modern_energy_designer/issues"
+  },
+  "homepage": "https://github.com/kshowalter/modern_energy_designer#readme"
+}
