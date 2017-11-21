@@ -4,12 +4,13 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: ['./client/app.js'],
+    bundle: ['./client/app.js'],
   },
   output: {
     path: path.resolve(__dirname, 'public'),
-    publicPath: '/',
-    filename: '[name].js'
+    filename: '[name].js',
+    sourceMapFilename: '[file].map', //Filename
+    publicPath: '/'
   },
 
   //plugins: [
@@ -17,6 +18,8 @@ module.exports = {
   //    'process.env.NODE_ENV': JSON.stringify('dev')
   //  })
   //],
+  devtool: 'cheap-module-eval-source-map',
+
 
   module: {
     loaders: [
