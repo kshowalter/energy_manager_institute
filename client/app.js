@@ -5,107 +5,86 @@
 * @version 0.1.0
 */
 console.log('/\\');
-
 import 'normalize.css';
-
 import $ from 'simpledom';
 import f from 'functions';
 import hash_router from 'hash_router';
 import Specdom  from 'specdom';
-
-import input_page from './input';
-
+import print_specs from '../lib/print_specs';
 import settings from './settings';
 
-var page_file_list = require.context("../page/", true, /.*\.md$/).keys();
+var page_file_list = require.context('../page/', true, /.*\.md$/).keys();
 
-var pages = {};
-
-/*
-page_file_list.forEach(function(file_path){
-  var page_name = file_path.split(/\/|\./).slice(-2)[0];
-  console.log('P', page_name, file_path);
-  pages[page_name] = require(file_path);
-});
-*/
-
-var print_specs = function print_specs(specs, logger, indent_string){
-  var desc;
-  if( specs.constructor === String ){
-    desc = indent_string + '  ' + specs;
-  } else {
-    desc = indent_string + '<' + specs.tag;
-    if( specs.props && ( specs.props.class || specs.props.id ) ){
-      desc += ': ';
-      if( specs.props.class ){
-        desc += '.'+specs.props.class;
-      }
-      if( specs.props.id ){
-        desc += '#'+specs.props.id;
-      }
-    }
-    if( specs.text ){
-      desc += ' | ' + specs.text;
-    }
-  }
-  logger( desc );
-  indent_string += '  ';
-  if( specs.children ){
-    specs.children.forEach(function(child_specs){
-      print_specs(child_specs, logger, indent_string)
-    })
-  }
-}
 
 
 // Load page content
-function requireAll(r) {
-  r.keys().forEach(function(file_path){
-    var page_name = file_path.split(/\/|\./).slice(-2)[0];
-    var location = file_path.split(/\/|\./).slice(2,-2);
-
-    //console.log('NAME', page_id, page_name);
-    //pages[page_name] = r(file_path);
-
-    var page_specs = r(file_path);
-
-    //var title = markdown_specs.children[0].children[0].text;
-    page_specs.props.id = 'page';
-
-    var title = f.pretty_name(page_name);
-    if( page_specs &&
-        page_specs.children &&
-        page_specs.children[0] &&
-        page_specs.children[0].children[0].tag === 'h1'
-      ){
-      title = page_specs.children[0].children[0].children[0];
-      //delete(page_specs.children[0].children[0]);
-    }
-
+function requireAll(context) {
+  var files = [];
+  context.keys().forEach(function(file_path){
+    var file_name = file_path.split(/\/|\./).slice(-2)[0];
     var page_id;
     if( location.length > 0 ){
-      page_id = location.join('/') + '/' + page_name;
+      page_id = location.join('/') + '/' + file_name;
     } else {
-      page_id = page_name;
+      page_id = file_name;
     }
-
-    pages[page_id] = {
-      location: location,
-      name: page_name,
-      title: title,
-      specs: page_specs
-    };
+    files.push({
+      page_id: page_id,
+      file_name: file_name,
+      file_location: file_path.split(/\/|\./).slice(2,-2),
+      content: context(file_path),
+    });
   });
+  return files;
 }
-requireAll(require.context('../page/', true, /\.md$/));
 
-pages['input'] = {
-  specs: input_page()
+
+var modules_md = requireAll(require.context('../page/', true, /\.md$/));
+var pages_md = {};
+modules_md.forEach(function(imported_module){
+  var page_id = imported_module.page_id;
+  var page_specs = imported_module.content;
+  var page_name = imported_module.file_name;
+  var file_location = imported_module.file_location;
+  //var title = markdown_specs.children[0].children[0].text;
+  page_specs.props.id = 'page';
+  var title = f.pretty_name(page_name);
+  if( page_specs &&
+      page_specs.children &&
+      page_specs.children[0] &&
+      page_specs.children[0].children[0].tag === 'h1'
+  ){
+    title = page_specs.children[0].children[0].children[0];
+  }
+  pages_md[page_id] = {
+    location: file_location,
+    name: page_name,
+    title: title,
+    specs: page_specs
+  };
+});
+
+var pages_js = {};
+requireAll(require.context('./page/', true, /\.js$/)).forEach(imported_module => {
+  pages_js[imported_module.file_name] = Object.assign(imported_module, {
+    content: imported_module.content.default
+  });
+});
+var pages_controls = {};
+requireAll(require.context('./control/', true, /\.js$/)).forEach(imported_module => {
+  pages_controls[imported_module.file_name] = Object.assign(imported_module, {
+    content: imported_module.content.default
+  });
+});
+
+console.log('pages_js', pages_js);
+
+pages_md['input'] = {
+  specs: pages_js.input.content()
 
 };
 
-//var about = require('markdown_parser!../page/about.md');
-console.log('pages', pages);
+console.log('pages_md', pages_md);
 
 var global = window || global;
 
@@ -118,7 +97,6 @@ global.measurments = {};
 
 var content_anchor = $('#content');
 var specdom = Specdom(content_anchor);
-
 
 var router = hash_router(function(selection){
   console.log('selection: ', selection);
@@ -133,10 +111,10 @@ var router = hash_router(function(selection){
       selected_location = '/';
     }
     console.log('ROUTING...');
-    var page = pages[selected_page_id];
+    var page = pages_md[selected_page_id];
     var page_specs;
     if( ! page ){
-      page_specs = pages[404].specs;
+      page_specs = pages_md[404].specs;
     } else {
       page_specs = page.specs;
     }
@@ -177,8 +155,8 @@ var router = hash_router(function(selection){
       }
     });
 
-    if( pages['menu'] ){
-      pages['menu'].specs.children[0].children.forEach(function(li_spec){
+    if( pages_md['menu'] ){
+      pages_md['menu'].specs.children[0].children.forEach(function(li_spec){
         var name = li_spec.children[0].children[0];
         var prety_name = f.pretty_name(name);
         var href = li_spec.children[0].props.href
