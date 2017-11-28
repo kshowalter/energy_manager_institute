@@ -21,17 +21,18 @@ var page_file_list = require.context('../page/', true, /.*\.md$/).keys();
 function requireAll(context) {
   var files = [];
   context.keys().forEach(function(file_path){
-    var file_name = file_path.split(/\/|\./).slice(-2)[0];
-    var page_id;
+    var name = file_path.split(/\/|\./).slice(-2)[0];
+    var id;
     if( location.length > 0 ){
-      page_id = location.join('/') + '/' + file_name;
+      id = location.join('/') + '/' + name;
     } else {
-      page_id = file_name;
+      id = name;
     }
     files.push({
-      page_id: page_id,
-      file_name: file_name,
-      file_location: file_path.split(/\/|\./).slice(2,-2),
+      id: id,
+      title: f.pretty_name(name),
+      name: name,
+      location: file_path.split(/\/|\./).slice(2,-2),
       content: context(file_path),
     });
   });
@@ -40,51 +41,44 @@ function requireAll(context) {
 
 
 var modules_md = requireAll(require.context('../page/', true, /\.md$/));
-var pages_md = {};
+var pages = {};
 modules_md.forEach(function(imported_module){
-  var page_id = imported_module.page_id;
   var page_specs = imported_module.content;
-  var page_name = imported_module.file_name;
-  var file_location = imported_module.file_location;
-  //var title = markdown_specs.children[0].children[0].text;
+  var name = imported_module.name;
   page_specs.props.id = 'page';
-  var title = f.pretty_name(page_name);
+  var title = f.pretty_name(name);
   if( page_specs &&
       page_specs.children &&
       page_specs.children[0] &&
       page_specs.children[0].children[0].tag === 'h1'
   ){
     title = page_specs.children[0].children[0].children[0];
+  } else {
+    title = imported_module.title;
   }
-  pages_md[page_id] = {
-    location: file_location,
-    name: page_name,
+  pages[imported_module.id] = pages[imported_module.id] || {};
+  pages[imported_module.id] = Object.assign(pages[imported_module.id], imported_module, {
     title: title,
-    specs: page_specs
-  };
+    page_specs: page_specs
+  });
 });
 
 var pages_js = {};
 requireAll(require.context('./page/', true, /\.js$/)).forEach(imported_module => {
-  pages_js[imported_module.file_name] = Object.assign(imported_module, {
-    content: imported_module.content.default
+  pages[imported_module.id] = pages[imported_module.id] || {};
+  pages[imported_module.id] = Object.assign(pages[imported_module.id], imported_module, {
+    page_function: imported_module.content.default
   });
 });
 var pages_controls = {};
 requireAll(require.context('./control/', true, /\.js$/)).forEach(imported_module => {
-  pages_controls[imported_module.file_name] = Object.assign(imported_module, {
-    content: imported_module.content.default
+  pages[imported_module.id] = pages[imported_module.id] || {};
+  pages[imported_module.id] = Object.assign(pages[imported_module.id], {
+    control: imported_module.content.default
   });
 });
 
-console.log('pages_js', pages_js);
-
-pages_md['input'] = {
-  specs: pages_js.input.content()
-
-};
-
-console.log('pages_md', pages_md);
+console.log('pages', pages);
 
 var global = window || global;
 
@@ -105,18 +99,24 @@ var router = hash_router(function(selection){
     router('About');
   } else {
     var selected_page_id = selection.join('/');
-    var selected_page_name = selection[selection.length-1];
+    //var selected_page_name = selection[selection.length-1];
     var selected_location = selection.slice(0,selection.length-1).join(' / ');
     if( ! selected_location ){
       selected_location = '/';
     }
     console.log('ROUTING...');
-    var page = pages_md[selected_page_id];
+    var page = pages[selected_page_id];
     var page_specs;
     if( ! page ){
-      page_specs = pages_md[404].specs;
+      page_specs = pages[404].page_specs;
     } else {
-      page_specs = page.specs;
+      if( page.page_specs ){
+        page_specs = page.page_specs;
+      } else if( page.page_function ) {
+        page_specs = page.page_function();
+      } else {
+        page_specs = pages[404].page_specs;
+      }
     }
 
     var titlebar_content = {
@@ -155,11 +155,11 @@ var router = hash_router(function(selection){
       }
     });
 
-    if( pages_md['menu'] ){
-      pages_md['menu'].specs.children[0].children.forEach(function(li_spec){
+    if( pages['menu'] ){
+      pages['menu'].page_specs.children[0].children.forEach(function(li_spec){
         var name = li_spec.children[0].children[0];
         var prety_name = f.pretty_name(name);
-        var href = li_spec.children[0].props.href
+        var href = li_spec.children[0].props.href;
         //console.log(page_id === selected_page_id, page_id , selected_page_id );
         var selected = href.slice(2) === selected_page_id;
         //console.log('selected', page_id, selected_page_id, selected);
@@ -205,9 +205,16 @@ var router = hash_router(function(selection){
     console.log('SPECS', specs);
     //rint_specs( specs, console.log, 's| ');
     var status = specdom.load(specs);
+    console.log('status', status);
     if( status ){
-      //resize_sections();
-
+      console.log('page loaded', selected_page_id);
+      var control = pages[selected_page_id].control;
+      console.log('control', control);
+      if( control ){
+        control();
+      }
+      /*
+      */
     }
 
     if( page_specs.meta.backgroundImage ){
