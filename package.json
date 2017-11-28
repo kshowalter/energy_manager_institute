@@ -21,6 +21,7 @@
     "functions": "github:kshowalter/functions",
     "hash_router": "github:kshowalter/hash_router",
     "normalize.css": "latest",
+    "simpledom": "github:kshowalter/simpledom",
     "specdom": "github:kshowalter/specdom",
     "specdom_helper": "github:kshowalter/specdom_helper"
   },
