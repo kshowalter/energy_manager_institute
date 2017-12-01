@@ -7,13 +7,23 @@ export default function(){
 
 
   var spec = {
-    tag: 'canvas',
+    tag: 'div',
     props: {
-      id: 'canvas',
-      width: 1500,
-      height: 1500
-    }
-  };
+      id: 'page',
+    },
+    children: [
+      {
+        tag: 'canvas',
+        props: {
+          id: 'canvas',
+          width: 1000,
+          height: 1000
+        }
+      }
+
+    ]
+
+  }
 
 
 

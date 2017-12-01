@@ -207,9 +207,9 @@ var router = hash_router(function(selection){
     var status = specdom.load(specs);
     console.log('status', status);
     if( status ){
-      console.log('page loaded', selected_page_id);
+      //console.log('page loaded', selected_page_id);
       var control = pages[selected_page_id].control;
-      console.log('control', control);
+      //console.log('control', control);
       if( control ){
         control();
       }
