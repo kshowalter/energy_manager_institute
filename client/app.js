@@ -13,6 +13,8 @@ import Specdom  from 'specdom';
 import print_specs from '../lib/print_specs';
 import settings from './settings';
 
+
+
 var page_file_list = require.context('../page/', true, /.*\.md$/).keys();
 
 
@@ -86,6 +88,7 @@ global.logger = console.log;
 global.f = f;
 global.$ = $;
 global.settings = settings;
+//global.page_state = {};
 sessionStorage.load_times = sessionStorage.load_times || '';
 global.measurments = {};
 

@@ -1,29 +1,39 @@
 import draw_on_canvas from '../../lib/draw_on_canvas';
-import shape from '../../lib/shape_maker';
+import mk_shape from '../../lib/shape_maker';
 import mouse from '../../lib/mouse';
+import shapes from './home_model/shapes';
+import click from '../../lib/click';
 
-var state = {
+var global = window || global;
+
+
+var state = global.page_state = {
   specs: {},
-  center: {
-    x: 300,
-    y: 300,
+  shapes: {},
+  locations: {
+    center: {
+      x: 300,
+      y: 300,
+    }
+
   }
 };
+state.shapes = shapes(state);
+
 var id = 'canvas';
 var canvas;
-console.log('canvas', canvas);
+//console.log('canvas', canvas);selected
 
 function draw() {
   var ctx = document.getElementById('canvas').getContext('2d');
-  var x = state.center.x;
-  var y = state.center.y;
 
   state.specs = [
-    shape('fill', 'white', 'rect', [0, 0, canvas.width, canvas.height]),
-
-    shape('stroke', 'red', 'rect', [x,y,100,300]),
-    shape('fill', 'blue', 'rect', [x,y,300,100]),
+    mk_shape('fill', 'white', 'rect', [0, 0, canvas.width, canvas.height]),
   ];
+
+  state.shapes.forEach(function(shape){
+    state.specs.push(shape);
+  });
 
   ctx.save();
 
@@ -34,6 +44,19 @@ function draw() {
   window.requestAnimationFrame(draw);
 }
 
+var actions = {
+  center: function(coor){
+    state.center = coor;
+    draw();
+  },
+  click: function(coor){
+    click(coor);
+    console.log('changed, redraw');
+    draw();
+  },
+};
+
+
 export default function(){
 
   canvas = document.getElementById(id);
@@ -42,7 +65,7 @@ export default function(){
     var ctx = canvas.getContext('2d');
 
 
-    mouse(canvas, state);
+    mouse(canvas, actions);
 
     window.requestAnimationFrame(draw);
   } else {
