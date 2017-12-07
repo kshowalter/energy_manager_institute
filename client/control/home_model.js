@@ -1,5 +1,5 @@
 import draw_on_canvas from '../../lib/draw_on_canvas';
-import mk_shape from '../../lib/shape_maker';
+import mk_shape from '../../lib/mk_shape';
 import mouse from '../../lib/mouse';
 import shapes from './home_model/shapes';
 import click from '../../lib/click';
@@ -9,6 +9,7 @@ var global = window || global;
 
 var state = global.page_state = {
   specs: {},
+  update: true,
   shapes: {},
   locations: {
     center: {
@@ -20,28 +21,34 @@ var state = global.page_state = {
 };
 state.shapes = shapes(state);
 
+
 var id = 'canvas';
 var canvas;
 //console.log('canvas', canvas);selected
 
 function draw() {
-  var ctx = document.getElementById('canvas').getContext('2d');
+  if( state.update ){
+    console.log('|>raw');
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
 
-  state.specs = [
-    mk_shape('fill', 'white', 'rect', [0, 0, canvas.width, canvas.height]),
-  ];
+    state.specs = [
+      mk_shape('rect', 'fill', 'white', [0, 0, canvas.width, canvas.height]),
+    ];
 
-  state.shapes.forEach(function(shape){
-    state.specs.push(shape);
-  });
+    state.shapes.forEach(function(shape){
+      state.specs.push(shape);
+    });
 
-  ctx.save();
+    ctx.save();
 
-  draw_on_canvas(canvas, state.specs);
+    draw_on_canvas(canvas, state.specs);
 
-  ctx.restore();
+    ctx.restore();
 
-  window.requestAnimationFrame(draw);
+    state.update = false;
+    window.requestAnimationFrame(draw);
+  }
 }
 
 var actions = {
