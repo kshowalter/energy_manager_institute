@@ -14,17 +14,8 @@ body {
 }
 
 #titlebar {
-  position: page;
-  top: 0;
-  left: 0;
-  width: 100%;
-  color: black;
-  /* background: whitesmoke; */
-  background: black;
-  padding: 0.25em;
-  /* height: 3.5em; */
-  padding-top: 0.75em;
-  padding-bottom: 0.75em;
+  background-color: #90c3ff;
+  padding: 2px;
   border-bottom: 1px solid rgb(42,42,42);
 }
 
@@ -33,11 +24,9 @@ body {
   -moz-osx-font-smoothing: never;
   margin: 0.5em;
   padding: 0;
-  font-size: 2em;
+  font-size: 1.25em;
   font-weight: bold;
-  color: whitesmoke;
-  text-shadow:  0 0 10px rgb(128, 255, 128) ,
-                0 0 30px rgb(128, 255, 128) ;
+  color: #f2ff00;
 }
 
 .terminal {
@@ -48,7 +37,7 @@ body {
   box-sizing: border-box;
   padding: 10px;
   border: none;
-  color: rgb(17, 104, 0);
+  color: black;
   text-decoration: normal;
   text-align: center;
   -o-text-overflow: clip;
@@ -68,28 +57,21 @@ body {
 
 
 .titlebar_link {
-  color: rgb(17, 104, 1);
+  color: #8a8a8a;
   font-size: 1.25em;
-  font-weight: 600;
+  font-weight: 300;
   padding: 0.5em;
-  -webkit-transform: translateY(-10%);
-  -ms-transform: translateY(-10%);
-  transform: translateY(-10%);
 }
 
 a:hover.titlebar_link{
   text-decoration: underline;
   text-decoration-color: rgb(17, 149, 5);
-  /* color: rgb(200, 255, 200);*/
-  text-shadow:  0 0 10px rgb(128, 255, 128) ,
-                0 0 30px rgb(128, 255, 128) ;
+
 }
 
 .titlebar_link_selected {
-  color: rgb(200, 255, 200);
+  color: white;
   font-weight: 900;
-  text-shadow:  0 0 10px rgb(128, 255, 128) ,
-                0 0 30px rgb(128, 255, 128) ;
 }
 
 
