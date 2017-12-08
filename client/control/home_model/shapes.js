@@ -14,19 +14,44 @@ export default function(state){
   group = mk_shape('group');
   shapes.push(group);
 
-  w = 100;
-  h = 300;
-  shape = mk_shape('rect', 'stroke', 'red', [x-w/2,y-h/2,w,h], [
+  w = 10;
+  h = 30;
+  shape = mk_shape('rect', 'fill', 'blue', [x-w/2,y-h/2,w,h], [
     mk_shape('rect', 'stroke', 'blue', [x-w/2,y-h/2,w,h])
   ]);
   group.children.push(shape);
 
-  w = 300;
-  h = 100;
-  shape = mk_shape('rect', 'fill', 'red', [x-w/2,y-h/2,w,h], [
+  w = 30;
+  h = 10;
+  shape = mk_shape('rect', 'fill', 'blue', [x-w/2,y-h/2,w,h], [
+    mk_shape('rect', 'stroke', 'blue', [x-w/2,y-h/2,w,h])
+  ]);
+  group.children.push(shape);
+
+  x = state.locations.center.x + 50;
+
+  group = mk_shape('group');
+  shapes.push(group);
+
+  w = 10;
+  h = 30;
+  shape = mk_shape('rect', 'stroke', 'blue', [x-w/2,y-h/2,w,h], [
     mk_shape('rect', 'fill', 'blue', [x-w/2,y-h/2,w,h])
   ]);
   group.children.push(shape);
+
+  w = 30;
+  h = 10;
+  shape = mk_shape('rect', 'stroke', 'blue', [x-w/2,y-h/2,w,h], [
+    mk_shape('rect', 'fill', 'blue', [x-w/2,y-h/2,w,h])
+  ]);
+  group.children.push(shape);
+
+  link_shapes(shapes.slice(-2));
+
+
+
+
 
   x = 100;
   y = 100;
