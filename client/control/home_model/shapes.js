@@ -5,6 +5,7 @@ export default function(state){
   var shape;
   var group;
   var shapes = [];
+  var path;
 
   var x, y, w, h;
 
@@ -72,6 +73,35 @@ export default function(state){
   shapes.push(shape);
 
   link_shapes(shapes.slice(-2));
+
+
+
+
+
+  path = [
+    {x:40,y:200},
+    [30,0],
+    [0,10,10,10],
+    [0,20],
+    [0,10,-10,10],
+    [-20,0],
+    [-10,0,-10,-10],
+    'close'
+  ];
+  shape = mk_shape('path', 'stroke', 'blue', path,[
+    mk_shape('path', 'stroke', 'red', path),
+    mk_shape('path', 'fill', 'red', path),
+  ]);
+  shapes.push(shape);
+
+
+  shape = mk_shape('circ', 'fill', 'red', [500,500,50]);
+  shapes.push(shape);
+
+
+
+
+
 
 
   return shapes;

@@ -21,6 +21,8 @@ var state = global.page_state = {
 };
 state.shapes = shapes(state);
 
+console.log(state.shapes);
+
 
 var id = 'canvas';
 var canvas;
