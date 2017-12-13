@@ -1,5 +1,6 @@
 import mk_shape from '../../../lib/mk_shape';
 import link_shapes from '../../../lib/link_shapes';
+import analyze_shape from '../../../lib/analyze_shape';
 
 export default function(state){
   var shape;
@@ -95,14 +96,15 @@ export default function(state){
   shapes.push(shape);
 
 
-  shape = mk_shape('circ', 'fill', 'red', [500,500,50]);
+  shape = mk_shape('circ', 'fill', 'red', [500,500,50], [
+    mk_shape('circ', 'fill', 'purple', [500,500,50])
+  ]);
   shapes.push(shape);
 
 
 
 
 
-
-
+  shapes.forEach(analyze_shape);
   return shapes;
 }
