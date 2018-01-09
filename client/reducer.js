@@ -11,8 +11,14 @@ var r = {
     };
   },
   click: function(existing_state,action){
-    return click(existing_state, action.coor);
+    existing_state = click(existing_state, action.coor);
+    existing_state.shape_action_queue.forEach(function(name){
+      console.log('do:',name);
+    });
+    existing_state.shape_action_queue = [];
+    return existing_state;
   },
+
 };
 
 

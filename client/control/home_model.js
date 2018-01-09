@@ -16,9 +16,9 @@ var page_state = global.page_state = {
     center: {
       x: 300,
       y: 300,
-    }
-
-  }
+    },
+  },
+  shape_action_queue: []
 };
 
 var store = mindux(page_state, reducer, action_makers);

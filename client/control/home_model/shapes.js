@@ -61,7 +61,7 @@ export default function(state){
   h = 100;
   shape = mk_shape('rect', 'stroke', 'blue', [x-w/2,y-h/2,w,h], [
     mk_shape('rect', 'fill', 'blue', [x-w/2,y-h/2,w,h])
-  ]);
+  ], 'add:refrig1');
   shapes.push(shape);
 
   x = 600;
@@ -70,7 +70,7 @@ export default function(state){
   h = 100;
   shape = mk_shape('rect', 'fill', 'purple', [x-w/2,y-h/2,w,h], [
     mk_shape('rect', 'stroke', 'purple', [x-w/2,y-h/2,w,h])
-  ]);
+  ], 'remove:refrig1');
   shapes.push(shape);
 
   link_shapes(shapes,2);
@@ -92,7 +92,7 @@ export default function(state){
   shape = mk_shape('path', 'stroke', 'blue', path,[
     mk_shape('path', 'stroke', 'red', path),
     mk_shape('path', 'fill', 'red', path),
-  ]);
+  ], 'status:document');
   shapes.push(shape);
 
 
