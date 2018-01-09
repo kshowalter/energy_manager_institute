@@ -10,12 +10,13 @@ import $ from 'simpledom';
 import f from 'functions';
 import hash_router from 'hash_router';
 import Specdom  from 'specdom';
-import print_specs from '../lib/print_specs';
+//import print_specs from '../lib/print_specs';
+import clone from '../lib/clone';
 import settings from './settings';
 
 
 
-var page_file_list = require.context('../page/', true, /.*\.md$/).keys();
+//var page_file_list = require.context('../page/', true, /.*\.md$/).keys();
 
 
 
@@ -65,14 +66,14 @@ modules_md.forEach(function(imported_module){
   });
 });
 
-var pages_js = {};
+//var pages_js = {};
 requireAll(require.context('./page/', true, /\.js$/)).forEach(imported_module => {
   pages[imported_module.id] = pages[imported_module.id] || {};
   pages[imported_module.id] = Object.assign(pages[imported_module.id], imported_module, {
     page_function: imported_module.content.default
   });
 });
-var pages_controls = {};
+//var pages_controls = {};
 requireAll(require.context('./control/', true, /\.js$/)).forEach(imported_module => {
   pages[imported_module.id] = pages[imported_module.id] || {};
   pages[imported_module.id] = Object.assign(pages[imported_module.id], {
@@ -80,10 +81,9 @@ requireAll(require.context('./control/', true, /\.js$/)).forEach(imported_module
   });
 });
 
-console.log('pages', pages);
-
 var global = window || global;
 
+global.clone = clone;
 global.logger = console.log;
 global.f = f;
 global.$ = $;
@@ -96,7 +96,6 @@ var content_anchor = $('#content');
 var specdom = Specdom(content_anchor);
 
 var router = hash_router(function(selection){
-  console.log('selection: ', selection);
 
   if( ! selection ){
     router('About');
@@ -107,7 +106,6 @@ var router = hash_router(function(selection){
     if( ! selected_location ){
       selected_location = '/';
     }
-    console.log('ROUTING...');
     var page = pages[selected_page_id];
     var page_specs;
     if( ! page ){
@@ -205,10 +203,8 @@ var router = hash_router(function(selection){
         page_specs
       ]
     };
-    console.log('SPECS', specs);
     //rint_specs( specs, console.log, 's| ');
     var status = specdom.load(specs);
-    console.log('status', status);
     if( status ){
       //console.log('page loaded', selected_page_id);
       var control = pages[selected_page_id].control;

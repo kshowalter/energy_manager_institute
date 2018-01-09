@@ -49,7 +49,7 @@ export default function(state){
   ]);
   group.children.push(shape);
 
-  link_shapes(shapes.slice(-2));
+  link_shapes(shapes,2);
 
 
 
@@ -73,7 +73,7 @@ export default function(state){
   ]);
   shapes.push(shape);
 
-  link_shapes(shapes.slice(-2));
+  link_shapes(shapes,2);
 
 
 

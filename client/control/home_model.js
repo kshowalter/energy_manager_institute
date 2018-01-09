@@ -1,13 +1,14 @@
 import draw_on_canvas from '../../lib/draw_on_canvas';
 import mk_shape from '../../lib/mk_shape';
 import mouse from '../../lib/mouse';
+import mindux from '../../lib/mindux';
 import shapes from './home_model/shapes';
-import click from '../../lib/click';
+import reducer from '../reducer';
+import action_makers from '../action_makers';
 
 var global = window || global;
 
-
-var state = global.page_state = {
+var page_state = global.page_state = {
   specs: {},
   update: true,
   shapes: {},
@@ -19,18 +20,21 @@ var state = global.page_state = {
 
   }
 };
-state.shapes = shapes(state);
 
-console.log(state.shapes);
+var store = mindux(page_state, reducer, action_makers);
+
+page_state.shapes = shapes(page_state);
+
+//console.log(page_state.shapes);
 
 
 var id = 'canvas';
 var canvas;
 //console.log('canvas', canvas);selected
 
-function draw() {
+function draw(state) {
+  console.log('|>raw', state );
   if( state.update ){
-    console.log('|>raw');
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
 
@@ -49,21 +53,11 @@ function draw() {
     ctx.restore();
 
     state.update = false;
-    window.requestAnimationFrame(draw);
+    //window.requestAnimationFrame(draw);
   }
 }
 
-var actions = {
-  center: function(coor){
-    state.center = coor;
-    draw();
-  },
-  click: function(coor){
-    click(coor);
-    console.log('changed, redraw');
-    draw();
-  },
-};
+store.subscribe(draw);
 
 
 export default function(){
@@ -71,12 +65,12 @@ export default function(){
   canvas = document.getElementById(id);
   //canvas.style.backgroundColor = "#caeffc";
   if (canvas.getContext) {
-    var ctx = canvas.getContext('2d');
+    //var ctx = canvas.getContext('2d');
 
+    mouse(canvas, store.actions);
 
-    mouse(canvas, actions);
-
-    window.requestAnimationFrame(draw);
+    store.actions.update();
+    //window.requestAnimationFrame(draw);
   } else {
     console.log('NO CANVAS');
   }
