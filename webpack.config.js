@@ -1,13 +1,13 @@
 var path = require('path');
-var webpack = require('webpack');
+//var webpack = require('webpack');
 //var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    bundle: ['./client/app.js'],
+    bundle: ['./src/client/app.js'],
   },
   output: {
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname),
     filename: '[name].js',
     sourceMapFilename: '[file].map', //Filename
     publicPath: '/'
