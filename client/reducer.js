@@ -1,5 +1,15 @@
 import click from '../lib/click';
 
+var internal_actions = {
+  add_item: function(existing_state, action){
+    console.log(action);
+    return existing_state;
+  },
+
+};
+
+
+
 var r = {
   update: function(existing_state,action){
     console.log('I am still okay.');
