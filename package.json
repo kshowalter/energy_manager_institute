@@ -4,7 +4,7 @@
   "description": "Web application to help users learn to design modern electrical generation systems.",
   "main": "webpack.config.js",
   "scripts": {
-    "serve": "webpack-dev-server --content-base public/ --inline --hot -d",
+    "serve": "webpack-dev-server --inline --hot -d",
     "build": "webpack"
   },
   "repository": {
