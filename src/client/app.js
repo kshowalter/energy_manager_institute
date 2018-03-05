@@ -81,6 +81,18 @@ requireAll(require.context('./control/', true, /\.js$/)).forEach(imported_module
   });
 });
 
+
+console.log(pages);
+
+if( pages['menu'] ){
+  var title;
+  if( pages['menu'].page_specs.children[0].children[0].tag === 'h1' ){
+    title = pages['menu'].page_specs.children[0].children[0].children[0];
+  } else {
+    title = 'Webpage';
+  }
+}
+
 var global = window || global;
 
 global.clone = clone;
@@ -98,7 +110,7 @@ var specdom = Specdom(content_anchor);
 var router = hash_router(function(selection){
 
   if( ! selection ){
-    router('About');
+    router(f.name_to_id(title));
   } else {
     var selected_page_id = selection.join('/');
     //var selected_page_name = selection[selection.length-1];
@@ -128,12 +140,13 @@ var router = hash_router(function(selection){
       children: [
         ///*
         {
-          tag: 'span',
+          tag: 'a',
           props: {
             id: 'site_title',
-            class: 'terminal'
+            class: 'terminal',
+            href: '/',
           },
-          text: 'Modern Energy Generation Designer :'
+          text: title + ' :'
         }
       ]
     };
@@ -157,7 +170,13 @@ var router = hash_router(function(selection){
     });
 
     if( pages['menu'] ){
-      pages['menu'].page_specs.children[0].children.forEach(function(li_spec){
+      var entries;
+      if( pages['menu'].page_specs.children[0].children[0].tag === 'h1' ){
+        entries = pages['menu'].page_specs.children[0].children[1].children;
+      } else {
+        entries = pages['menu'].page_specs.children[0].children;
+      }
+      entries.forEach(function(li_spec){
         var name = li_spec.children[0].children[0];
         var prety_name = f.pretty_name(name);
         var href = li_spec.children[0].props.href;
@@ -231,3 +250,5 @@ var router = hash_router(function(selection){
 
   }
 });
+
+router();
