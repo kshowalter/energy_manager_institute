@@ -81,7 +81,7 @@ export default function(state){
 
   var d2 = "M119.4,176.6v293.6h24.5V490h47.4v-19.8H299V490h47v-19.8h24.5V176.6H119.4z M167.2,264.1c0,5.4-4.3,9.7-9.7,9.7     s-9.7-4.3-9.7-9.7v-57.2c0-5.4,4.3-9.7,9.7-9.7s9.7,4.3,9.7,9.7V264.1z";
   path = parse_svg_path(d2);
-  console.log(path);
+  //console.log(path);
   shape = mk_shape('path', 'stroke', 'grey', path);
   shapes.push(shape);
 
@@ -90,7 +90,7 @@ export default function(state){
 
   var d2 = "M 370.6,157.1 V 0 H 119.4 V 157.1 Z M 147.4,67.3 c 0,-5.4 4.3,-9.7 9.7,-9.7 5.4,0 9.7,4.3 9.7,9.7 v 57.2 c 0,5.4 -4.3,9.7 -9.7,9.7 -5.4,0 -9.7,-4.3 -9.7,-9.7 z";
   path = parse_svg_path(d2);
-  console.log(path);
+  //console.log(path);
   shape = mk_shape('path', 'stroke', 'grey', path);
   shapes.push(shape);
 

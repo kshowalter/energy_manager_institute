@@ -1,3 +1,2 @@
+# Energy Manager Institute
 * [About](#/About)
-* [Resume](#/Designer)
-* [Projects](#/Help)

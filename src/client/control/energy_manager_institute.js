@@ -2,7 +2,7 @@ import draw_on_canvas from '../../lib/draw_on_canvas';
 import mk_shape from '../../lib/mk_shape';
 import mouse from '../../lib/mouse';
 import mindux from '../../lib/mindux';
-import shapes from './home_model/shapes';
+import shapes from './energy_manager_institute/shapes';
 import reducer from '../reducer';
 import action_makers from '../action_makers';
 

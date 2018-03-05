@@ -1,5 +1,5 @@
 {
-  "name": "modern_energy_designer",
+  "name": "energy_manager_institute",
   "version": "0.1.0",
   "description": "Web application to help users learn to design modern electrical generation systems.",
   "main": "webpack.config.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kshowalter/modern_energy_designer.git"
+    "url": "git+https://github.com/kshowalter/energy_manager_institute.git"
   },
   "author": "Keith Showalter",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kshowalter/modern_energy_designer/issues"
+    "url": "https://github.com/kshowalter/energy_manager_institute/issues"
   },
-  "homepage": "https://github.com/kshowalter/modern_energy_designer#readme",
+  "homepage": "https://github.com/kshowalter/energy_manager_institute#readme",
   "dependencies": {
     "functions": "github:kshowalter/functions",
     "hash_router": "github:kshowalter/hash_router",
