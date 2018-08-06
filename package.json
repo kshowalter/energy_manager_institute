@@ -9,30 +9,36 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kshowalter/energy_manager_institute.git"
+    "url": "git+https://gitlab.com/mechkit/energy_manager_institute.git"
   },
   "author": "Keith Showalter",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kshowalter/energy_manager_institute/issues"
+    "url": "https://gitlab.com/mechkit/energy_manager_institute/issues"
   },
-  "homepage": "https://github.com/kshowalter/energy_manager_institute#readme",
+  "homepage": "https://gitlab.com/mechkit/energy_manager_institute#readme",
   "dependencies": {
-    "functions": "github:kshowalter/functions",
-    "hash_router": "github:kshowalter/hash_router",
-    "normalize.css": "latest",
-    "simpledom": "github:kshowalter/simpledom",
-    "specdom": "github:kshowalter/specdom",
-    "specdom_helper": "github:kshowalter/specdom_helper"
+    "base64-url": "^2.2.0",
+    "functions": "gitlab:mechkit/functions",
+    "hash_router": "gitlab:mechkit/hash_router",
+    "mkDrawing": "gitlab:mechkit/mkDrawing",
+    "mkwebsite": "gitlab:mechkit/mkwebsite",
+    "normalize.css": "^8.0.0",
+    "pixi.js": "^4.8.1",
+    "simpledom": "gitlab:mechkit/simpledom",
+    "specdom": "gitlab:mechkit/specdom",
+    "specdom_helper": "gitlab:mechkit/specdom_helper",
+    "update": "^0.7.4"
   },
   "devDependencies": {
-    "babel-core": "latest",
-    "babel-loader": "latest",
-    "babel-preset-env": "latest",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
     "css-loader": "latest",
-    "markdown_loader": "github:kshowalter/markdown_loader",
+    "imports-loader": "^0.8.0",
     "style-loader": "latest",
-    "webpack": "latest",
-    "webpack-dev-server": "latest"
+    "webpack": "^4.16.2",
+    "webpack-bundle-analyzer": "^2.13.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
   }
 }

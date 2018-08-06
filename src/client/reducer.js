@@ -20,12 +20,7 @@ var r = {
       center: action.coor,
     };
   },
-  click: function(existing_state,action){
-    existing_state = click(existing_state, action.coor);
-    existing_state.shape_action_queue.forEach(function(name){
-      console.log('do:',name);
-    });
-    existing_state.shape_action_queue = [];
+  'status:document': function(existing_state,action){
     return existing_state;
   },
 
@@ -37,18 +32,27 @@ function reducer( existing_state={}, action ){
     return existing_state;
   }
 
-  //var clone_state = clone(existing_state);
-
-  if( action.type === 'init' ){
-    return existing_state;
-  }
-  if( Object.keys(r).indexOf(action.type)+1 ){
-    //state = r[action.type](state,action);
-    return r[action.type](existing_state,action);
+  var actions;
+  if( action.type === 'click' ){
+    existing_state = click(existing_state, action.coor);
+    actions = existing_state.shape_action_queue.map( (type)=>({type}) );
+    existing_state.shape_action_queue = [];
   } else {
-    console.log('I do not know how to: ', action);
-    return existing_state;
+    actions = [action];
   }
+  //var clone_state = clone(existing_state);
+  return actions.reduce( function(state,action){
+    if( action.type === 'init' ){
+      return state;
+    }
+    if( Object.keys(r).indexOf(action.type)+1 ){
+      //state = r[action.type](state,action);
+      return r[action.type](state,action);
+    } else {
+      console.log('I do not know how to: ', action);
+      return state;
+    }
+  }, existing_state);
 
 }
 

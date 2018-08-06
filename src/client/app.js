@@ -170,13 +170,13 @@ var router = hash_router(function(selection){
     });
 
     if( pages['menu'] ){
-      var entries;
+      var docs;
       if( pages['menu'].page_specs.children[0].children[0].tag === 'h1' ){
-        entries = pages['menu'].page_specs.children[0].children[1].children;
+        docs = pages['menu'].page_specs.children[0].children[1].children;
       } else {
-        entries = pages['menu'].page_specs.children[0].children;
+        docs = pages['menu'].page_specs.children[0].children;
       }
-      entries.forEach(function(li_spec){
+      docs.forEach(function(li_spec){
         var name = li_spec.children[0].children[0];
         var prety_name = f.pretty_name(name);
         var href = li_spec.children[0].props.href;

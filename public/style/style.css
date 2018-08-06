@@ -1,0 +1,333 @@
+a {
+  text-decoration: none;
+}
+
+table
+{
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+body {
+  font-family: sans-serif;
+  background: #7885ac;
+}
+
+/*
+http://stackoverflow.com/questions/4918018/eliminate-padding-margin-around-pics-in-td-elements
+Finally, I add this line, which removes that stupid spacing which appears all the time, the one that isn't padding, margin or anything.
+*/
+table, tr, td, th, tbody, thead{vertical-align:baseline}
+
+h1, h2, h3, h4, h5, h6, th, td, caption { font-weight:normal; }
+
+th, td {
+  text-align: left;
+}
+
+img { border: 0; }
+
+
+
+#titlebar {
+  position: page;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: black;
+  background: whitesmoke;
+  padding: 0.25em;
+  /* height: 3.5em; */
+  padding-top: 0.5em;
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid rgb(230,230,230);
+}
+
+#titlebar_content {
+  color: #7885ac;
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 97%;
+  padding-left: 1em;
+}
+
+#site_title {
+  padding: 0;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+#menu {
+  display: inline;
+}
+
+#menu > li {
+  -webkit-transform: translateY(20%);
+  -ms-transform: translateY(20%);
+  transform: translateY(20%);
+  display: inline;
+  color: #bac3db;
+  font-size: 1.25em;
+  font-weight: 600;
+  padding: 0.5em;
+}
+
+a:hover.titlebar_link{
+  text-decoration: underline;
+  text-decoration-color: rgb(17, 149, 5);
+  /* color: rgb(200, 255, 200);*/
+  text-shadow:  0 0 10px rgb(222, 220, 0),
+                0 0 30px rgb(222, 220, 0) ;
+}
+
+.titlebar_link_selected {
+  color: #4c62a4;
+  font-weight: 900;
+}
+
+.site_title_selected {
+  color: #4c62a4;
+}
+
+
+
+.transition{
+  position: page;
+  width: 100%;
+  margin: 0;
+  /* background: whitesmoke; */
+  padding: 0.5px;
+  /* height: 3.5em; */
+  border-top: 1px solid rgb(200,200,200);
+  background: rgb(127,127,127);
+  border-bottom: 1px solid rgb(64,64,64);
+  margin-bottom: 0.5em;
+}
+
+#background {
+  padding: 0;
+}
+
+
+.display_area{
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto;
+  width: 97%;
+}
+
+
+@media screen and (max-width: 1111px) { /* 1300 * 0.97 */
+
+  #site_title {
+    font-size: 1.5em;
+  }
+  #titlebar_content {
+    padding-left: 0.5em;
+  }
+
+  .terminal {
+    padding: 5px;
+  }
+
+}
+
+
+@media screen and (max-width: 900px) { /* 1300 * 0.97 */
+
+  #menu .menu_bracket {
+    display: none;
+  }
+
+  #titlebar {
+    padding-top: 0.75em;
+    padding-bottom: 0.5em;
+  }
+
+}
+
+@media screen and (max-width: 700px) { /* 1300 * 0.97 */
+
+  #site_title {
+    display: block;
+    text-align: center;
+    font-size: 1.25em;
+  }
+
+  .display_area{
+    width: 100%
+  }
+  #titlebar_content {
+    width: 100%
+  }
+
+  #menu {
+    text-align: center;;
+    display: block;
+  }
+
+  #menu .titlebar_option {
+    font-size: 1.0em;
+  }
+
+  .terminal {
+    padding: 2px;
+  }
+
+}
+
+@media screen and (max-width: 400px) { /* 1300 * 0.97 */
+  #site_title {
+    font-size: 1em;
+  }
+}
+
+
+.page {
+  background-color: whitesmoke;
+  border-radius: 0.4em;
+  border: 2px solid #e4e4e4;
+  overflow: auto;
+  padding: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+
+.page_title {
+  color: black;
+  background-color: whitesmoke;
+  border-radius: 0.4em;
+  padding: 0.3em;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  position: relative;
+  top: 0.75em;
+  left: 0;
+}
+
+.section_title {
+  margin: 0.5em;
+}
+
+#page_name {
+  margin-top: 0.5em;
+  margin-bottom: 0.25em;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: steelblue;
+}
+
+
+.input_line {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.input_group {
+  margin: 0.25em;
+  padding-left: 0.5em;
+  /* float: left; */
+  border-radius: 0.4em;
+
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
+  border: 0.5px solid #abb5d1;
+  /* align-items: center; */
+  /* height: 70px; */
+}
+
+.input_group > span {
+  padding-right: 0.5em;
+  /* display: block; */
+  /* word-wrap: normal; */
+  /* text-align: center; */
+}
+
+.input:disabled, .input_group[disabled="true"] {
+  background: #dddddd;
+}
+
+.input_int {
+  /* width: 5em; */
+}
+
+.input_int > input {
+  /* width: 100%; */
+  width: 2.5em;
+}
+
+.input_list_wide > select {
+  width: 22em;
+}
+.input_list_mid > select {
+  width: 15em;
+}
+.input_list_narrow > select {
+  width: 8em;
+}
+
+
+/* Added CSS to help with form fields being easier to read */
+
+.input {
+  margin: 0.2em;
+  line-height: 21.875px;
+  background-color: #FFF;
+  border: 1px solid #CCC;
+  border-radius: 3px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.18) inset;
+  transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
+.input_button {
+  margin: 5px;
+  line-height: 21.875px;
+  background-color: silver;
+  border: 1px solid #CCC;
+  border-radius: 3px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.18) inset;
+  transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
+
+
+.notes span {
+  text-decoration: underline;
+}
+.notes ul {
+  list-style-type: square;
+  margin-left: 2em;
+}
+.notes div {
+  margin-left: 1em;
+}
+
+.label, .label_black, .label_red, .label_green {
+  margin-left: 1em;
+}
+.label_black {
+  color: black;
+}
+.label_darkgrey {
+  color: darkgrey;
+}
+.label_red {
+  color: red;
+}
+.label_green {
+  color: green;
+}
+
+.label_pos {
+  color: black;
+}
+.label_neg {
+  color: red;
+}

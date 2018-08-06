@@ -17,7 +17,7 @@
       "always"
     ],
     "no-console": 0,
-    "no-unused-vars": 1,
+    "no-unused-vars": 1
   },
   "env": {
     "node": true,
@@ -25,7 +25,7 @@
     "es6": true
   },
   "parserOptions": {
-    "sourceType": "module",
+    "sourceType": "module"
   },
   "extends": "eslint:recommended",
   "globals": {

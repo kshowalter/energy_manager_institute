@@ -3,6 +3,41 @@ import link_shapes from '../../../lib/link_shapes';
 import analyze_shape from '../../../lib/analyze_shape';
 import parse_svg_path from '../../../lib/parse_svg_path';
 
+var mkDrawing =require('mkDrawing');
+
+var drawing_settings = {
+  layer_attr: {},
+  fonts: {},
+  blocks: {},
+
+};
+
+var l = drawing_settings.layer_attr;
+l['base'] = {
+  'fill': 'none',
+  'stroke':'#000000',
+  'stroke-width':'1px',
+  'stroke-linecap':'butt',
+  'stroke-linejoin':'miter',
+  'stroke-opacity':1,
+
+};
+l['preview'] = Object.assign(Object.create(l.base),{
+  'stroke-width': '2',
+  'stroke-dasharray': '5, 5',
+});
+l['box'] = Object.assign(Object.create(l.base),{
+  fill: '#e1e1e1',
+  stroke: 'none'
+});
+l['house_frame'] = Object.assign(Object.create(l.base),{
+  stroke: 'blue'
+});
+/*
+*/
+
+
+
 export default function(state){
   var shape;
   var group;
@@ -10,6 +45,10 @@ export default function(state){
   var path;
 
   var x, y, w, h;
+
+
+  var d = mkDrawing(drawing_settings);
+
 
   group = mk_shape('group');
   shapes.push(group);
@@ -19,6 +58,14 @@ export default function(state){
   y = 500;
   w = 500;
   h = 150;
+  d.layer('house_frame');
+  d.rect(
+    [x-w/2,y-h/2],
+    [w,h],
+    {
+      
+    }
+    'stroke', 'blue', , null, 'house');
   shape = mk_shape('rect', 'stroke', 'blue', [x-w/2,y-h/2,w,h], null, 'house');
   group.children.push(shape);
 
