@@ -41,24 +41,27 @@ export default {
         on: true
       },
       {
-        name: 'Light',
-        type: 'light_incandecent',
+        name: 'Incandecent Light',
+        type: 'light',
         output: 60,
         unit: 'W',
+        eff: 1,
         on: true
       },
       {
-        name: 'Light',
-        type: 'light_florecent',
+        name: 'Florecent Light',
+        type: 'light',
         output: 60,
         unit: 'W',
+        eff: 0.3,
         on: true
       },
       {
-        name: 'Light',
-        type: 'light_led',
+        name: 'Led Light',
+        type: 'light',
         output: 60,
         unit: 'W',
+        eff: 0.1,
         on: true
       },
       {
@@ -69,29 +72,25 @@ export default {
         on: false
       },
       {
-        name: 'PV panel',
-        type: 'PV',
+        type: 'photovoltaic_panel',
         supply: 150,
         unit: 'W',
         on: false
       },
       {
-        name: 'PV panel',
-        type: 'PV',
+        type: 'photovoltaic_panel',
         supply: 200,
         unit: 'W',
         on: false
       },
       {
-        name: 'PV panel',
-        type: 'PV',
+        type: 'photovoltaic_panel',
         supply: 250,
         unit: 'W',
         on: false
       },
       {
-        name: 'PV panel',
-        type: 'PV',
+        type: 'photovoltaic_panel',
         supply: 300,
         unit: 'W',
         on: false
