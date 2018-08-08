@@ -28,5 +28,5 @@ export default function update(state,actions){
     system.grid.supply = system.energy_balance;
   }
 
-  update_page(state);
+  update_page(state,actions);
 }

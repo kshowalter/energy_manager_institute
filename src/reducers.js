@@ -31,7 +31,13 @@ export default {
     state.inputs = {};
     state = mk_system_data(state);
     return state;
-  }
+  },
+
+  add_component: function(state,action){
+    var db_id = action.arguments[0];
+    state.system.components.push(state.db.components.docs[db_id]);
+    return state;
+  },
 
 
 };

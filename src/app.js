@@ -35,7 +35,7 @@ db.components = load_components(db.components);
 var init_state = {
   db,
   save,
-  system: mksystem(),
+  system: mksystem(db),
   owner: mkowner(),
   // display_pixi
 };

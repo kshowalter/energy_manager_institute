@@ -41,6 +41,7 @@ export default function(components){
     doc = process_db_doc(doc,i);
     components.tree[doc.type] = components.tree[doc.type] || [];
     components.tree[doc.type].push(doc);
+    components[i] = doc;
   });
 
 

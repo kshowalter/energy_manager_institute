@@ -5,31 +5,25 @@ import f from 'functions';
 
 var specdom_main = Specdom('#content');
 
-export default function(state){
+export default function(state,actions){
   var system = state.system;
   var components_specs = div({class:'input_group'},[]);
 
   var types = [''].concat( Object.keys(state.db.components.tree) );
 
   system.components.forEach(component=>{
-    // var comp_parts = component.label;
-    // text += component.load ? component.load : '';
-    // text += component.supply ? component.supply : '';
-    console.log(component);
     components_specs.children.push(div({class:'label'},[
-      span({class:'label'},component.label!==undefined? component.label : ''),
+      span({class:'label'},component.label!==undefined? component.label : '-'),
       span({class:'label label_neg'},component.load!==undefined? component.load : ''),
       span({class:'label label_pos'},component.supply!==undefined? component.supply : ''),
     ]));
   });
-  components_specs.children.push(div('add'));
   components_specs.children.push(span({class:'input_list_mid'},[
     select(types.map(type=>{
       return option(f.pretty_name(type),{value:type});
     }),{
       id:'component_category_selection',
       onchange: function(e){
-        console.log('change',e.target.value);
         var component_selection_sd = $('#component_selection').attr('disabled',null).clear();
         component_selection_sd.append($(option('')));
         var components = state.db.components.tree[e.target.value];
@@ -44,6 +38,13 @@ export default function(state){
   components_specs.children.push(span({class:'input_list_mid'},[
     select({id:'component_selection',disabled:true})
   ]));
+  components_specs.children.push(a('add',{
+    href: 'javascript:;',
+    onclick: function(){
+      var db_id = $('#component_selection').elem.value;
+      actions.add_component(db_id);
+    },
+  }));
 
   var building_specs = div({class:'input_group'},[
     div({class:'label'},system.energy_loads),
@@ -75,7 +76,7 @@ export default function(state){
     ]),
   ]);
 
-  console.log('state',state);
-  console.log('specs',specs);
+  // console.log('state',state);
+  // console.log('specs',specs);
   specdom_main.load(specs);
 }

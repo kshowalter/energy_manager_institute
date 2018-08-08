@@ -1,4 +1,4 @@
-export default function(){
+export default function(db){
   var system = {
     components: [],
     structure: {},
@@ -30,74 +30,9 @@ export default function(){
   //   supply: 0,
   //   on: true
   // });
-  system.components.push({
-    name: 'PowerBox5000',
-    type: 'battery',
-    load: 0,
-    supply: 0,
-    energy: 100,
-    on: false
-  });
-
-
-  system.components.push({
-    name: 'Air compressor',
-    load: 2500,
-    on: false
-  });
-  system.components.push({
-    name: 'Air handeler',
-    load: 750,
-    on: false
-  });
-  system.components.push({
-    name: 'Computer',
-    load: 500,
-    on: true
-  });
-  system.components.push({
-    name: 'TV',
-    load: 200,
-    on: true
-  });
-  system.components.push({
-    name: 'Light',
-    load: 20,
-    on: true
-  });
-  system.components.push({
-    name: 'Light',
-    load: 20,
-    on: true
-  });
-  system.components.push({
-    name: 'Clothes dryer',
-    load: 750,
-    on: false
-  });
-
-
-  system.components.push({
-    name: 'PV panel',
-    supply: 200,
-    on: false
-  });
-  system.components.push({
-    name: 'PV panel',
-    supply: 200,
-    on: false
-  });
-  system.components.push({
-    name: 'PV panel',
-    supply: 200,
-    on: false
-  });
-  system.components.push({
-    name: 'PV panel',
-    supply: 200,
-    on: false
-  });
-
+  system.components.push(db.components[1]);
+  system.components.push(db.components[2]);
+  system.components.push(db.components[3]);
 
 
   return system;
