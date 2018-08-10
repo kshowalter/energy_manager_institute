@@ -44,3 +44,7 @@ var actions = mkwebsite(init_state, reducers, update);
 
 var selected_page_id = 'default';
 mk_page(actions, selected_page_id);
+
+window.setInterval(function(){
+  actions.tick();
+}, 3000);

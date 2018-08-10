@@ -39,5 +39,11 @@ export default {
     return state;
   },
 
+  tick: function(state,action){
+    state.system.time++;
+    // console.log(state.system.time);
+    return state;
+  }
+
 
 };

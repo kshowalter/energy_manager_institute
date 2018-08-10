@@ -1,82 +1,51 @@
 import {div, span, p, a, ul, li, br, h1, h2, h3, input, select, option} from 'specdom_helper';
-import Specdom  from 'specdom';
 import $ from 'simpledom';
 import f from 'functions';
 
-var specdom_main = Specdom('#content');
-
 export default function(state,actions){
   var system = state.system;
-  var components_specs = div({class:'input_group'},[]);
+
+  var components_specs = $('#components_specs').clear();
 
   var types = [''].concat( Object.keys(state.db.components.tree) );
 
+  //components_specs.clear();
   system.components.forEach(component=>{
-    components_specs.children.push(div({class:'label'},[
+    components_specs.append(div([
       span({class:'label'},component.label!==undefined? component.label : '-'),
       span({class:'label label_neg'},component.load!==undefined? component.load : ''),
       span({class:'label label_pos'},component.supply!==undefined? component.supply : ''),
     ]));
   });
-  components_specs.children.push(span({class:'input_list_mid'},[
-    select(types.map(type=>{
-      return option(f.pretty_name(type),{value:type});
-    }),{
-      id:'component_category_selection',
-      onchange: function(e){
-        var component_selection_sd = $('#component_selection').attr('disabled',null).clear();
-        component_selection_sd.append($(option('')));
-        var components = state.db.components.tree[e.target.value];
-        components.forEach(component=>{
-          component_selection_sd.append(option(component.label,{value:component.db_id}));
-        });
 
 
-      },
-    })
-  ]));
-  components_specs.children.push(span({class:'input_list_mid'},[
-    select({id:'component_selection',disabled:true})
-  ]));
-  components_specs.children.push(a('add',{
-    href: 'javascript:;',
-    onclick: function(){
-      var db_id = $('#component_selection').elem.value;
-      actions.add_component(db_id);
-    },
-  }));
 
-  var building_specs = div({class:'input_group'},[
-    div({class:'label'},system.energy_loads),
-    div({class:'label'},system.energy_supply),
-    div({class:'label'},system.energy_balance),
-  ]);
 
-  var utility_specs = div({class:'input_group'},[
-    div({class:'label'},system.grid.load),
-    div({class:'label'},system.grid.supply),
-  ]);
+  var value = $('#component_category_selection').attr('value');
+  var component_selection_sd = $('#component_selection').attr('disabled',null).clear();
+  component_selection_sd.append($(option('')));
+  var components = state.db.components.tree[value];
+  system.components.forEach(component=>{
+    component_selection_sd.append(option(component.label,{value:component.db_id}));
+  });
 
-  var system_specs = div({class:'input_group'},[
-    div({class:'label'},system.energy_loads),
-    div({class:'label'},system.energy_supply),
-    div({class:'label'},system.energy_balance),
-  ]);
 
-  var specs = div([
-    div({class:'page'},[
-      span({class:'section_title'},'Components'),
-      components_specs,
-      span({class:'section_title'},'Building totals'),
-      building_specs,
-      span({class:'section_title'},'Utility Grid'),
-      utility_specs,
-      span({class:'section_title'},'System totals'),
-      system_specs,
-    ]),
-  ]);
 
-  // console.log('state',state);
-  // console.log('specs',specs);
-  specdom_main.load(specs);
+  // */
+
+
+  $('#time').clear().append(system.time);
+
+  $('#init_energy_loads').clear().append(system.energy_loads);
+  $('#init_energy_supply').clear().append(system.energy_supply);
+  $('#init_energy_balance').clear().append(system.energy_balance);
+
+  $('#grid.load').clear().append(system.grid.load);
+  $('#grid.supply').clear().append(system.grid.supply);
+
+  $('#energy_loads').clear().append(system.energy_loads);
+  $('#energy_supply').clear().append(system.energy_supply);
+  $('#energy_balance').clear().append(system.energy_balance);
+
+
 }

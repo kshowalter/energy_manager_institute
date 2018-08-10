@@ -9,7 +9,6 @@ import 'normalize.css';
 import $ from 'simpledom';
 import f from 'functions';
 import hash_router from 'hash_router';
-import Specdom  from 'specdom';
 //import print_specs from '../lib/print_specs';
 import clone from '../lib/clone';
 import settings from './settings';
@@ -104,8 +103,7 @@ global.settings = settings;
 sessionStorage.load_times = sessionStorage.load_times || '';
 global.measurments = {};
 
-var content_anchor = $('#content');
-var specdom = Specdom(content_anchor);
+
 
 var router = hash_router(function(selection){
 
@@ -223,17 +221,8 @@ var router = hash_router(function(selection){
       ]
     };
     //rint_specs( specs, console.log, 's| ');
-    var status = specdom.load(specs);
-    if( status ){
-      //console.log('page loaded', selected_page_id);
-      var control = pages[selected_page_id].control;
-      //console.log('control', control);
-      if( control ){
-        control();
-      }
-      /*
-      */
-    }
+    var sdom = $('#content');
+    sdom.append(specs);
 
     if( page_specs.meta.backgroundImage ){
       document.body.style.backgroundImage = 'url("assets/'+page_specs.meta.backgroundImage+'")';
@@ -245,8 +234,6 @@ var router = hash_router(function(selection){
     } else {
       document.body.style['background-color'] = null;
     }
-
-
 
   }
 });

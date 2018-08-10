@@ -1,5 +1,6 @@
 export default function(db){
   var system = {
+    time: 0,
     components: [],
     structure: {},
     environment: {
