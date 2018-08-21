@@ -1,6 +1,6 @@
 
 export default {
-  status: 'emtpty',
+  status: '',
   components: {
     docs: [
       {

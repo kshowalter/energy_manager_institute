@@ -5,27 +5,27 @@ export default {
 
   init: function(state,action){
     console.log('reducer: init');
+    state.specs = action.arguments[0];
     return state;
   },
 
   update_inputs: function(state,action){
     console.log('reducer: update_inputs');
-    var inputs = {};
-    var inputs_elements = document.getElementsByClassName('input');
-    for (var i = 0; i < inputs_elements.length; i++) {
-      var input = inputs_elements[i];
-      var section,name;
-      [section,name] =  input.id.split('.');
-      inputs[section] = inputs[section] || {};
-      var value = f.str_to_num(input.value);
-      if(value==='') value = undefined;
-      inputs[section][name] = value;
-    }
-    sessionStorage.setItem('inputs', JSON.stringify(inputs));
+    var id = action.arguments[0];
+    var value = action.arguments[1];
+    // state.inputs = {};
+    value = f.str_to_num(value);
+    if(value==='') value = undefined;
+    state.inputs[id] = value;
 
-    state.inputs = inputs;
+    console.log(state.inputs);
+    if( id==='component_category_selection' ){
+      state.inputs.component_selection = undefined;
+    }
+
     state = mk_system_data(state);
     return state;
+
   },
   clear_inputs: function(state,action){
     state.inputs = {};

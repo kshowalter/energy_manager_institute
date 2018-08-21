@@ -11,7 +11,6 @@ import 'normalize.css';
 import mkwebsite from 'mkwebsite';
 import update from './update';
 import reducers from './reducers';
-import mk_page from './mk_page';
 import db from './db';
 import load_components from './load_components';
 import pixi from './pixi';
@@ -21,11 +20,11 @@ import mkowner from './mkowner';
 
 var global = window || global;
 
-var save = sessionStorage.getItem('save');
-if( save ){
-  save = JSON.parse(save);
+var inputs = sessionStorage.getItem('inputs');
+if( inputs ){
+  inputs = JSON.parse(inputs);
 } else {
-  save = {};
+  inputs = {};
 }
 
 // var display_pixi = pixi();
@@ -34,17 +33,20 @@ db.components = load_components(db.components);
 
 var init_state = {
   db,
-  save,
+  options: {},
+  inputs,
   system: mksystem(db),
   owner: mkowner(),
+  specs: {},
   // display_pixi
 };
 
 var actions = mkwebsite(init_state, reducers, update);
-
-var selected_page_id = 'default';
-mk_page(actions, selected_page_id);
+actions.add_component(1);
+actions.add_component(2);
+actions.add_component(3);
 
 window.setInterval(function(){
-  actions.tick();
+  // console.log('TICK');
+  // actions.tick();
 }, 3000);

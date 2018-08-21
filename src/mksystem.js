@@ -31,9 +31,6 @@ export default function(db){
   //   supply: 0,
   //   on: true
   // });
-  system.components.push(db.components[1]);
-  system.components.push(db.components[2]);
-  system.components.push(db.components[3]);
 
 
   return system;

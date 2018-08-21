@@ -1,10 +1,14 @@
 import {div, span, p, a, ul, li, br, h1, h2, h3, input, select, option} from 'specdom_helper';
 import titlebar_spec from './titlebar_spec';
 import $  from 'simpledom';
+import f from 'functions';
 
-export default function(actions, selected_page_id){
+var sdom = $('#content');
 
-  var titlebar_content = titlebar_spec('Energy Manager Institute', [], selected_page_id);
+export default function(state, actions){
+  var system = state.system || {};
+
+  var titlebar_content = titlebar_spec('Energy Manager Institute', []);
 
   var specs = div([
     div({id:'titlebar'},[titlebar_content]),
@@ -13,30 +17,47 @@ export default function(actions, selected_page_id){
       div({class:'page'},[
         div({class:'section_title'},'Time'),
         div({class:'input_group'},[
-          div({id:'time'}),
+          div({id:'time'},system.time),
         ]),
         div({class:'section_title'},'Components'),
-        div({id:'components_specs',class:'input_group'},[
-          br(),
-        ]),
+        div({id:'components_specs',class:'input_group'},system.components.map(component=>{
+          return div([
+            span({class:'label'},component.label!==undefined? component.label : '-'),
+            span({class:'label label_neg'},component.load!==undefined? component.load : ''),
+            span({class:'label label_pos'},component.supply!==undefined? component.supply : ''),
+          ]);
+        })),
         div({class:'input_group'},[
           span({class:'input_list_mid'},[
-            select({
-              id:'component_category_selection',
-              onchange: function(e){
-                var component_selection_sd = $('#component_selection').attr('disabled',null).clear();
-                component_selection_sd.append($(option('')));
-                var components = state.db.components.tree[e.target.value];
-                components.forEach(component=>{
-                  component_selection_sd.append(option(component.label,{value:component.db_id}));
-                });
-
-
+            select(
+              {
+                class: 'input',
+                id:'component_category_selection',
+                value: state.inputs.component_category_selection,
+                onchange: function(e){
+                  actions.update_inputs(e.target.id,e.target.value);
+                },
               },
-            })
+              state.options.component_category_selection.map(type=>
+                option(f.pretty_name(type),{value:type})
+              )
+            )
           ]),
           span({class:'input_list_mid'},[
-            select({id:'component_selection',disabled:true})
+            select(
+              {
+                class:'input',
+                id:'component_selection',
+                disabled: state.inputs.component_category_selection !== undefined ? null : true ,
+                value: state.inputs.component_selection,
+                onchange: function(e){
+                  actions.update_inputs(e.target.id,e.target.value);
+                },
+              },
+              state.options.component_selection.map(component=>
+                option(component.label,{value:component.db_id})
+              )
+            )
           ]),
           a('add',{
             href: 'javascript:;',
@@ -48,27 +69,27 @@ export default function(actions, selected_page_id){
         ]),
         div({class:'section_title'},'Building totals'),
         div({class:'input_group'},[
-          div({id:'init_energy_loads',class:'label'}),
-          div({id:'init_energy_supply',class:'label'}),
-          div({id:'init_energy_balance',class:'label'}),
+          div({id:'init_energy_loads',class:'label'},system.energy_loads),
+          div({id:'init_energy_supply',class:'label'},system.energy_supply),
+          div({id:'init_energy_balance',class:'label'},system.energy_balance),
         ]),
         div({class:'section_title'},'Utility Grid'),
         div({class:'input_group'},[
-          div({id:'grid.load',class:'label'}),
-          div({id:'grid.supply',class:'label'}),
+          div({id:'grid.load',class:'label'},system.grid.load),
+          div({id:'grid.supply',class:'label'},system.grid.supply),
         ]),
         div({class:'section_title'},'System totals'),
         div({class:'input_group'},[
-          div({id:'energy_loads',class:'label'}),
-          div({id:'energy_supply',class:'label'}),
-          div({id:'energy_balance',class:'label'}),
+          div({id:'energy_loads',class:'label'},system.energy_loads),
+          div({id:'energy_supply',class:'label'},system.energy_supply),
+          div({id:'energy_balance',class:'label'},system.energy_balance),
         ]),
       ]),
     ])
   ]);
 
-
-  var sdom = $('#content');
-  sdom.append(specs);
-  actions.init();
+  console.log('specs',specs);
+  sdom.load(specs);
+  state.specs = specs;
+  //actions.init(state);
 }
